@@ -12,7 +12,7 @@
     <artifactId>cybertek</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>TicketingProject-REST</name>
-    <description>TicketingProject-Security</description>
+    <description>TicketingProject-REST</description>
     <properties>
         <java.version>19</java.version>
     </properties>
@@ -69,6 +69,26 @@
             <artifactId>modelmapper</artifactId>
             <version>2.3.9</version>
         </dependency>
+
+        <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt</artifactId>
+        <version>0.9.1</version>
+    </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.12</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-security -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-security</artifactId>
+            <version>1.6.12</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
