@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: Ticketing Project - REST
+  profiles:
+    active: default
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cybertek
+    username: postgres
+    password: 5432
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+#      mode: always
+      data-locations: classpath:data.sql
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+
+security:
+  jwt:
+    secret-key: cybertek
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
