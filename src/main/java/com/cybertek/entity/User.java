@@ -21,7 +21,7 @@ public class User extends BaseEntity{
     private String userName;
 
     private String password;
-    private Boolean enabled;
+    private boolean enabled;
     private String phone;
 
     @Enumerated(EnumType.STRING)
