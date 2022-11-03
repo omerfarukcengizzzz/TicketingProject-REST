@@ -1,5 +1,6 @@
 package com.cybertek.config;
 
+import com.cybertek.filter.SecurityFilter;
 import com.cybertek.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +20,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private SecurityService securityService;
     @Autowired
     private AuthSuccessHandler authSuccessHandler;
-//    @Autowired
-//    private SecurityFilter securityFilter;
+    @Autowired
+    private SecurityFilter securityFilter;
 
     @Override
     @Bean
@@ -76,8 +77,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
         // run this security filter before any API call
-//        http
-//                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+        http
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 
