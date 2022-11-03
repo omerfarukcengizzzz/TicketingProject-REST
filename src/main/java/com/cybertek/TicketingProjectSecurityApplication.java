@@ -8,10 +8,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
-public class TicketingProjectSecurityApplication {
+public class TicketingProjectRESTApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TicketingProjectSecurityApplication.class, args);
+        SpringApplication.run(TicketingProjectRESTApplication.class, args);
     }
 
     @Bean
