@@ -5,6 +5,7 @@ import com.cybertek.entity.common.UserPrincipal;
 import com.cybertek.repository.UserRepository;
 import com.cybertek.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,10 @@ public class SecurityServiceImpl implements SecurityService {
         if (user == null) throw new UsernameNotFoundException("This user does not exists!");
 
         return new UserPrincipal(user);
+    }
+
+    @Override
+    public User loadUser(String param) throws AccessDeniedException {
+        return null;
     }
 }
