@@ -1,6 +1,5 @@
 package com.cybertek.filter;
 import com.cybertek.entity.User;
-import com.cybertek.enums.UserState;
 import com.cybertek.service.SecurityService;
 import com.cybertek.util.JWTUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
