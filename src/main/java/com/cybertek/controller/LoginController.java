@@ -8,7 +8,7 @@ import com.cybertek.exception.TicketingProjectException;
 import com.cybertek.mapper.MapperUtil;
 import com.cybertek.service.UserService;
 import com.cybertek.util.JWTUtil;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,12 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @RestController
-@RequiredArgsConstructor
 public class LoginController {
 
+    @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
     private UserService userService;
+    @Autowired
     private MapperUtil mapperUtil;
+    @Autowired
     private JWTUtil jwtUtil;
 
     @RequestMapping(value = {"/", "/login"})
