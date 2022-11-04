@@ -16,8 +16,12 @@ import java.util.function.Function;
 @Component
 public class JWTUtil {
 
+    private String secret;
+
     @Value("${security.jwt.secret-key}")
-    private String secret = "cybertek";
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
 
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
