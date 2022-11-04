@@ -5,8 +5,8 @@ VALUES ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, 'Admin'),
 
 insert into users(insert_date_time, insert_user_id, is_deleted, last_update_date_time, last_update_user_id, enabled,
                   first_name, gender, last_name, user_name, role_id, password)
-values ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, true, 'admin', 'MALE', 'admin', 'admin@admin.com', 1, '$2a$10$nAB5j9G1c3JHgg7qzhiIXO7cqqr5oJ3LXRNQJKssDUwHXzDGUztNK'),
-                                                                                                                        -- Abc1 -> decoded password above,
+values ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, true, 'admin', 'MALE', 'admin', 'admin@admin.com', 1, '$2a$10$Q7ilQ6Hv11qpU0T7xfMzMeqxoPXkvhTVXxFqg0UL2xvLnhNqB7vba'),
+                                                                                                                        -- admin -> decoded password above,
         ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, true, 'Omer Faruk', 'MALE', 'CENGIZ', 'omer@gmail.com', 2, '$2a$10$I66Z4cGDlVI6NanijkgLQu8dPZqPCMDgDfaru9UqC.UQBsVRS2X6S'), -- Aa123
        ('2021-01-05 00:00:00', 1, false, '2021-01-05 00:00:00', 1, true, 'Tom', 'FEMALE', 'Hanks', 'employee@gmail.com', 3, '$2a$10$nAB5j9G1c3JHgg7qzhiIXO7cqqr5oJ3LXRNQJKssDUwHXzDGUztNK');
 
