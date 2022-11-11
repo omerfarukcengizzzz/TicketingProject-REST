@@ -12,10 +12,11 @@ import java.time.LocalDateTime;
 @Component
 public class BaseEntityListener extends AuditingEntityListener {
 
-    final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
     @PrePersist
     public void prePersist(BaseEntity baseEntity) {
+
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         baseEntity.setInsertDateTime(LocalDateTime.now());
         baseEntity.setLastUpdateDateTime(LocalDateTime.now());
@@ -32,6 +33,8 @@ public class BaseEntityListener extends AuditingEntityListener {
 
     @PreUpdate
     public void preUpdate(BaseEntity baseEntity) {
+
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         baseEntity.setLastUpdateDateTime(LocalDateTime.now());
         baseEntity.setLastUpdateUserId(1L);
