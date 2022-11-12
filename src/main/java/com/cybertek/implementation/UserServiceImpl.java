@@ -3,12 +3,9 @@ package com.cybertek.implementation;
 import com.cybertek.dto.ProjectDTO;
 import com.cybertek.dto.TaskDTO;
 import com.cybertek.dto.UserDTO;
-import com.cybertek.entity.Project;
-import com.cybertek.entity.Task;
 import com.cybertek.entity.User;
 import com.cybertek.exception.TicketingProjectException;
-import com.cybertek.mapper.MapperUtil;
-import com.cybertek.mapper.UserMapper;
+import com.cybertek.util.MapperUtil;
 import com.cybertek.repository.ProjectRepository;
 import com.cybertek.repository.UserRepository;
 import com.cybertek.service.ProjectService;
@@ -28,13 +25,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private UserMapper userMapper;
-    @Autowired
     private TaskService taskService;
     @Autowired
     private ProjectService projectService;
-    @Autowired
-    private ProjectRepository projectRepository;
     @Autowired
     private MapperUtil mapperUtil;
     @Autowired
@@ -132,7 +125,7 @@ public class UserServiceImpl implements UserService {
         List<User> userList = userRepository.findAllByRoleDescriptionIgnoreCase(role);
 
         return userList.stream()
-                .map(obj -> userMapper.convertToDTO(obj))
+                .map(obj -> mapperUtil.convert(obj, new UserDTO()))
                 .collect(Collectors.toList());
     }
 
@@ -141,7 +134,7 @@ public class UserServiceImpl implements UserService {
 
         switch (user.getRole().getDescription()) {
             case "Manager":
-                List<ProjectDTO> projectDTOList = projectService.listAllProjectsByManager(userMapper.convertToDTO(user));
+                List<ProjectDTO> projectDTOList = projectService.listAllProjectsByManager(mapperUtil.convert(user, new UserDTO()));
                 return projectDTOList.size() == 0;  // check if it is empty or not
             case "Employee":
                 List<TaskDTO> taskDTOList = taskService.readAllByAssignedEmployee(user);

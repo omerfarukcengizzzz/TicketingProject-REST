@@ -2,6 +2,7 @@ package com.cybertek.filter;
 import com.cybertek.entity.User;
 import com.cybertek.service.SecurityService;
 import com.cybertek.util.JWTUtil;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -54,7 +55,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
-    private boolean checkIfUserIsValid(String username) {
+    private boolean checkIfUserIsValid(String username) throws AccessDeniedException {
         User currentUser = securityService.loadUser(username);
         return currentUser != null && currentUser.isEnabled();
     }

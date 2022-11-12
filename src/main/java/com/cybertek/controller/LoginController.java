@@ -5,20 +5,17 @@ import com.cybertek.entity.ResponseWrapper;
 import com.cybertek.entity.User;
 import com.cybertek.entity.common.AuthenticationRequest;
 import com.cybertek.exception.TicketingProjectException;
-import com.cybertek.mapper.MapperUtil;
+import com.cybertek.util.MapperUtil;
 import com.cybertek.service.UserService;
 import com.cybertek.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Controller
 @RestController
 public class LoginController {
 
@@ -30,16 +27,6 @@ public class LoginController {
     private MapperUtil mapperUtil;
     @Autowired
     private JWTUtil jwtUtil;
-
-    @RequestMapping(value = {"/", "/login"})
-    public String login(){
-        return "/login";
-    }
-
-    @RequestMapping("/welcome")
-    public String welcome(){
-        return "/welcome";
-    }
 
     @PostMapping("/authenticate")
     public ResponseEntity<ResponseWrapper> doLogin(@RequestBody AuthenticationRequest authenticationRequest) throws TicketingProjectException {
