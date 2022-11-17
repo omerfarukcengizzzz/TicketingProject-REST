@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -95,6 +96,17 @@ public class LoginController {
                 .message("To confirm your account, please click here:")
                 .url(BASE_URL + "/confirmation?token=")
                 .build();
+    }
+
+    // a custom method to send the email
+    private void sendEmail(MailDTO mailDTO) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+        mailMessage.setTo(mailDTO.getEmailTo());
+        mailMessage.setSubject(mailDTO.getSubject());
+        mailMessage.setText(mailDTO.getMessage() + mailDTO.getUrl() + mailDTO.getToken());
+
+        confirmationTokenService.sendEmail(mailMessage);
     }
 
 }
