@@ -75,8 +75,9 @@ public class LoginController {
 
         UserDTO createdUser = userService.save(userDTO);
 
+        sendEmail(createEmail(createdUser));
 
-
+        return ResponseEntity.ok(new ResponseWrapper("User has been created!", createdUser));
     }
 
     // a custom method to create an email
