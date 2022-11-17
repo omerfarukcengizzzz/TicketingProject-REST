@@ -34,7 +34,7 @@ public class AdminController {
     }
 
     @PostMapping("/user-create/save")
-    public String saveUser(@ModelAttribute("user") UserDTO user, Model model) {
+    public String saveUser(@ModelAttribute("user") UserDTO user, Model model) throws TicketingProjectException {
 
         userService.save(user);
 
