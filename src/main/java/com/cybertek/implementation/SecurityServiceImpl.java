@@ -6,6 +6,7 @@ import com.cybertek.util.MapperUtil;
 import com.cybertek.service.SecurityService;
 import com.cybertek.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,7 +22,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityServiceImpl implements SecurityService {
 
+    @Autowired
     private UserService userService;
+    @Autowired
     private MapperUtil mapperUtil;
 
     @Override
