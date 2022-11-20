@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO save(UserDTO dto) throws TicketingProjectException {
-        User user = mapperUtil.convert(dto, new User());
+        User user = userRepository.findByUserName(dto.getUserName());
 
         if (user != null) {
             throw new TicketingProjectException("User already exists!");
