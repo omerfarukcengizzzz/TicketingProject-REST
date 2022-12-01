@@ -1,5 +1,6 @@
 package com.cybertek.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 @Setter
 @Entity
 @Table(name = "roles")
+@JsonIgnoreProperties(value = {"HibernateLazyInitializer"}, ignoreUnknown = true)
 public class Role extends BaseEntity {
 
     private String description;
