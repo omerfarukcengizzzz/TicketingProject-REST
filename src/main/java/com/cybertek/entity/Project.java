@@ -1,6 +1,7 @@
 package com.cybertek.entity;
 
 import com.cybertek.enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @Where(clause = "is_deleted = false")
+@JsonIgnoreProperties(value = {"HibernateLazyInitializer"}, ignoreUnknown = true)
 public class Project extends BaseEntity {
 
     private String projectName;
