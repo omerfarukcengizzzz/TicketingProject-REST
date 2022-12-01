@@ -1,4 +1,4 @@
-package com.cybertek.controller;
+package com.cybertek.controller.oldControllers;
 
 import com.cybertek.annotation.DefaultExceptionMessage;
 import com.cybertek.dto.MailDTO;
