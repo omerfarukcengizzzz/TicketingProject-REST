@@ -10,7 +10,6 @@ import com.cybertek.exception.TicketingProjectException;
 import com.cybertek.service.ConfirmationTokenService;
 import com.cybertek.service.RoleService;
 import com.cybertek.service.UserService;
-import com.cybertek.util.JWTUtil;
 import com.cybertek.util.MapperUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +43,7 @@ public class UserController {
     @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
     @PostMapping("/create-user")
     @Operation(summary = "Create new account")
+    @PreAuthorize("hasAuthority('Admin')")
     private ResponseEntity<ResponseWrapper> doRegister(@RequestBody UserDTO userDTO) throws TicketingProjectException {
 
         UserDTO createdUser = userService.save(userDTO);
@@ -52,6 +52,17 @@ public class UserController {
 
         return ResponseEntity.ok(new ResponseWrapper("User has been created!", createdUser));
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
     // Custom methods
