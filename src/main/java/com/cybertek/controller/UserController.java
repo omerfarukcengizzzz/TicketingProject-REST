@@ -85,8 +85,14 @@ public class UserController {
                 .ok(new ResponseWrapper("User has been deleted successfully!"));
     }
 
-
-
+    @GetMapping("/role")
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
+    @Operation(summary = "Delete user")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Manager')")
+    public ResponseEntity<ResponseWrapper> readByRole(@RequestParam String role) {
+        return ResponseEntity
+                .ok(new ResponseWrapper("User list has been retrieved by role!", userService.listAllByRole(role)));
+    }
 
 
 
