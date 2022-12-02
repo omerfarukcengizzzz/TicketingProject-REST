@@ -54,7 +54,7 @@ public class AdminController {
     }
 
     @PostMapping("/user-update/{username}")
-    public String updateUser(@PathVariable("username") String username, Model model, @ModelAttribute("user") UserDTO user) {
+    public String updateUser(@PathVariable("username") String username, Model model, @ModelAttribute("user") UserDTO user) throws TicketingProjectException {
 
         userService.update(user);
 

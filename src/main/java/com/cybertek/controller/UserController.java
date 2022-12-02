@@ -51,19 +51,39 @@ public class UserController {
     }
 
     @GetMapping
-    @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
     @Operation(summary = "Read all users")
     @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<ResponseWrapper> readAll() {
         return ResponseEntity.ok(new ResponseWrapper("ALl the users has been retrieved successfully!", userService.listAllUsers()));
     }
 
+    @GetMapping("/{username}")
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
+    @Operation(summary = "Get user by username")
+    // only admin should see the other profiles and the other users should only see their profile
+    public ResponseEntity<ResponseWrapper> readByUsername(@PathVariable String username) {
+        return ResponseEntity
+                .ok(new ResponseWrapper("User retrieved successfully!", userService.findByUserName(username)));
+    }
 
+    @PutMapping("/update")
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
+    @Operation(summary = "Update user")
+    public ResponseEntity<ResponseWrapper> updateUser(@RequestBody UserDTO userDTO) throws TicketingProjectException {
+        return ResponseEntity
+                .ok(new ResponseWrapper("User has been updated successfully!", userService.update(userDTO)));
+    }
 
+    @DeleteMapping("/{username}")
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
+    @Operation(summary = "Delete user")
+    @PreAuthorize("hasAuthority('Admin')")
+    public ResponseEntity<ResponseWrapper> deleteUser(@PathVariable String username) throws TicketingProjectException {
+        userService.delete(userService.findByUserName(username).getUserName());
 
-
-
-
+        return ResponseEntity
+                .ok(new ResponseWrapper("User has been deleted successfully!"));
+    }
 
 
 
