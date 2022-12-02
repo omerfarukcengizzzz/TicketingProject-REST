@@ -87,7 +87,7 @@ public class UserController {
 
     @GetMapping("/role")
     @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
-    @Operation(summary = "Delete user")
+    @Operation(summary = "Get users by role")
     @PreAuthorize("hasAnyAuthority('Admin', 'Manager')")
     public ResponseEntity<ResponseWrapper> readByRole(@RequestParam String role) {
         return ResponseEntity

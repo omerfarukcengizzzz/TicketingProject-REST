@@ -6,7 +6,6 @@ import com.cybertek.dto.UserDTO;
 import com.cybertek.entity.User;
 import com.cybertek.exception.TicketingProjectException;
 import com.cybertek.util.MapperUtil;
-import com.cybertek.repository.ProjectRepository;
 import com.cybertek.repository.UserRepository;
 import com.cybertek.service.ProjectService;
 import com.cybertek.service.TaskService;
