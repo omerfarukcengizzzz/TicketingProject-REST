@@ -18,10 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -44,13 +41,21 @@ public class UserController {
     @PostMapping("/create-user")
     @Operation(summary = "Create new account")
     @PreAuthorize("hasAuthority('Admin')")
-    private ResponseEntity<ResponseWrapper> doRegister(@RequestBody UserDTO userDTO) throws TicketingProjectException {
+    public ResponseEntity<ResponseWrapper> doRegister(@RequestBody UserDTO userDTO) throws TicketingProjectException {
 
         UserDTO createdUser = userService.save(userDTO);
 
         sendEmail(createEmail(createdUser));
 
         return ResponseEntity.ok(new ResponseWrapper("User has been created!", createdUser));
+    }
+
+    @GetMapping
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
+    @Operation(summary = "Read all users")
+    @PreAuthorize("hasAuthority('Admin')")
+    public ResponseEntity<ResponseWrapper> readAll() {
+        return ResponseEntity.ok(new ResponseWrapper("ALl the users has been retrieved successfully!", userService.listAllUsers()));
     }
 
 
