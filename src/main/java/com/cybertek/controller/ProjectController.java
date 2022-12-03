@@ -57,5 +57,24 @@ public class ProjectController {
                 .ok(new ResponseWrapper("Project updated successfully!", projectService.update(dto)));
     }
 
+    @DeleteMapping("/{projectCode}")
+    @Operation(summary = "Delete project")
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Manager')")
+    public ResponseEntity<ResponseWrapper> deleteProject(@PathVariable String projectCode) throws TicketingProjectException {
+        projectService.delete(projectCode);
+
+        return ResponseEntity
+                .ok(new ResponseWrapper("Project deleted successfully!"));
+    }
+
+    @PutMapping("/complete/{projectCode}")
+    @Operation(summary = "Complete project by project code")
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
+    @PreAuthorize("hasAnyAuthority('Manager')")
+    public ResponseEntity<ResponseWrapper> completeProject(@PathVariable String projectCode) throws TicketingProjectException {
+        return ResponseEntity
+                .ok(new ResponseWrapper("Project completed successfully!", projectService.complete(projectCode)));
+    }
 
 }

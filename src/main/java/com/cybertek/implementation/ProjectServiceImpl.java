@@ -96,9 +96,14 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void delete(String code) {
+    public void delete(String code) throws TicketingProjectException {
         // soft delete
         Project project = projectRepository.findByProjectCode(code);
+
+        if (project == null) {
+            throw new TicketingProjectException("Project does not exists!");
+        }
+
         project.setIsDeleted(true);
         project.setProjectCode(project.getProjectCode() + "-" + project.getId());
         projectRepository.save(project);
@@ -106,10 +111,17 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void complete(String projectCode) {
+    public ProjectDTO complete(String projectCode) throws TicketingProjectException {
         Project project = projectRepository.findByProjectCode(projectCode);
+
+        if (project == null) {
+            throw new TicketingProjectException("Project does not exists");
+        }
+
         project.setStatus(Status.COMPLETED);
         projectRepository.save(project);
+
+        return mapperUtil.convert(project, new ProjectDTO());
     }
 
     @Override

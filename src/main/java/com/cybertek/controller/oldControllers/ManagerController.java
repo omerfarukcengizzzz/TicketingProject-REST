@@ -4,6 +4,7 @@ import com.cybertek.dto.ProjectDTO;
 import com.cybertek.dto.TaskDTO;
 import com.cybertek.dto.UserDTO;
 import com.cybertek.enums.Status;
+import com.cybertek.exception.TicketingProjectException;
 import com.cybertek.service.ProjectService;
 import com.cybertek.service.TaskService;
 import com.cybertek.service.UserService;
@@ -96,7 +97,7 @@ public class ManagerController {
 
     // ----------------- Project - Complete -----------------
     @GetMapping("/project-complete/{projectCode}")
-    public String completeProject(@PathVariable("projectCode") String projectCode) {
+    public String completeProject(@PathVariable("projectCode") String projectCode) throws TicketingProjectException {
 
         projectService.complete(projectCode);
 

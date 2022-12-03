@@ -87,7 +87,7 @@ public class AdminController {
     }
 
     @PostMapping("/project-create/save")
-    public String projectUpdate(@ModelAttribute("project") ProjectDTO project) {
+    public String projectUpdate(@ModelAttribute("project") ProjectDTO project) throws TicketingProjectException {
 
         projectService.save(project);
 
@@ -96,7 +96,7 @@ public class AdminController {
 
     // ----------------- Project - Delete -----------------
     @GetMapping("/project-delete/{projectCode}")
-    public String deleteProject(@PathVariable("projectCode") String projectCode) {
+    public String deleteProject(@PathVariable("projectCode") String projectCode) throws TicketingProjectException {
 
         projectService.delete(projectCode);
 
@@ -105,7 +105,7 @@ public class AdminController {
 
     // ----------------- Project - Complete -----------------
     @GetMapping("/project-complete/{projectCode}")
-    public String completeProject(@PathVariable("projectCode") String projectCode) {
+    public String completeProject(@PathVariable("projectCode") String projectCode) throws TicketingProjectException {
 
         projectService.complete(projectService.getByProjectCode(projectCode).getProjectCode());
 
@@ -124,7 +124,7 @@ public class AdminController {
     }
 
     @PostMapping("/project-update/{projectCode}")
-    public String updateProject(@PathVariable("projectCode") String projectCode, @ModelAttribute("project") ProjectDTO project) {
+    public String updateProject(@PathVariable("projectCode") String projectCode, @ModelAttribute("project") ProjectDTO project) throws TicketingProjectException {
 
         projectService.update(project);
 
