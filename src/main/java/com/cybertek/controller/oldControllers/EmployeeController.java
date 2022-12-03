@@ -25,7 +25,7 @@ public class EmployeeController {
 
     // ----------------- Task Status -----------------
     @GetMapping("/pending-tasks")
-    public String taskStatus(Model model) {
+    public String taskStatus(Model model) throws TicketingProjectException {
 
         model.addAttribute("taskList", taskService.listAllTasksByStatusIsNot(Status.COMPLETED));
 

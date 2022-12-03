@@ -82,7 +82,7 @@ public class TaskController {
     @Operation(summary = "Get non completed tasks")
     @DefaultExceptionMessage(defaultMessage = "Something went wrong, please try again!")
     @PreAuthorize("hasAnyAuthority('Employee')")
-    public ResponseEntity<ResponseWrapper> readAllNonCompletedTasks() {
+    public ResponseEntity<ResponseWrapper> readAllNonCompletedTasks() throws TicketingProjectException {
         return ResponseEntity
                 .ok(new ResponseWrapper("Task is retrieved successfully!", taskService.listAllTasksByStatusIsNot(Status.COMPLETED)));
     }
