@@ -77,4 +77,13 @@ public class ProjectController {
                 .ok(new ResponseWrapper("Project completed successfully!", projectService.complete(projectCode)));
     }
 
+    @GetMapping("/details")
+    @Operation(summary = "Get project details")
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
+    @PreAuthorize("hasAnyAuthority('Manager')")
+    public ResponseEntity<ResponseWrapper> readAllProjectDetails() {
+        return ResponseEntity
+                .ok(new ResponseWrapper("Project details are retrieved successfully!", projectService.listAllProjectDetails()));
+    }
+
 }
