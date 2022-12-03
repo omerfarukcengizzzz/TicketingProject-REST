@@ -132,10 +132,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDTO> listAllTasksByProjectManager() {
-        String managerUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+    public List<TaskDTO> listAllTasksByProjectManager() throws TicketingProjectException {
+        // below code will check which user is logged in based on id
+        String managerId = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        User manager = userRepository.findByUserName(managerUsername);
+        Long id = Long.parseLong(managerId);
+
+        User manager = userRepository.findById(id).orElseThrow(() -> new TicketingProjectException("This user does not exists!"));
+
         List<Task> taskList = taskRepository.findAllByProjectAssignedManager(manager);
 
         return taskList.stream()

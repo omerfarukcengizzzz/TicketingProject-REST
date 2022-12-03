@@ -2,6 +2,7 @@ package com.cybertek.controller;
 
 import com.cybertek.annotation.DefaultExceptionMessage;
 import com.cybertek.entity.ResponseWrapper;
+import com.cybertek.exception.TicketingProjectException;
 import com.cybertek.service.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,7 +31,14 @@ public class TaskController {
                 .ok(new ResponseWrapper("Tasks are retrieved successfully!", taskService.listAllTasks()));
     }
 
-
+    @GetMapping("/project-manager")
+    @Operation(summary = "Get all tasks by project manager")
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, please try again!")
+    @PreAuthorize("hasAnyAuthority('Manager')")
+    public ResponseEntity<ResponseWrapper> readAllByProjectManager() throws TicketingProjectException {
+        return ResponseEntity
+                .ok(new ResponseWrapper("Tasks are retrieved successfully!", taskService.listAllTasksByProjectManager()));
+    }
 
 
 }
