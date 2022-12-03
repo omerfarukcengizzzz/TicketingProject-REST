@@ -20,7 +20,7 @@ public interface TaskService {
 
     void update(TaskDTO taskDTO);
 
-    void delete(Long id);
+    void delete(Long id) throws TicketingProjectException;
 
     Integer totalCompletedTasks(String projectCode);
 

@@ -52,9 +52,20 @@ public class TaskController {
     @Operation(summary = "Create a new task")
     @DefaultExceptionMessage(defaultMessage = "Something went wrong, please try again!")
     @PreAuthorize("hasAnyAuthority('Manager')")
-    public ResponseEntity<ResponseWrapper> createTask(@RequestBody TaskDTO taskDTO) throws TicketingProjectException {
+    public ResponseEntity<ResponseWrapper> createTask(@RequestBody TaskDTO taskDTO) {
         return ResponseEntity
                 .ok(new ResponseWrapper("Tasks are retrieved successfully!", taskService.save(taskDTO)));
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete task by id")
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, please try again!")
+    @PreAuthorize("hasAnyAuthority('Manager')")
+    public ResponseEntity<ResponseWrapper> deleteTask(@PathVariable Long id) throws TicketingProjectException {
+        taskService.delete(id);
+
+        return ResponseEntity
+                .ok(new ResponseWrapper("Tasks are retrieved successfully!"));
     }
 
 }

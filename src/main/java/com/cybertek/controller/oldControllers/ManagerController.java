@@ -53,7 +53,7 @@ public class ManagerController {
 
     // ----------------- Task - Delete -----------------
     @GetMapping("/task-delete/{id}")
-    public String deleteTask(@PathVariable("id") Long id) {
+    public String deleteTask(@PathVariable("id") Long id) throws TicketingProjectException {
 
         taskService.delete(id);
 
