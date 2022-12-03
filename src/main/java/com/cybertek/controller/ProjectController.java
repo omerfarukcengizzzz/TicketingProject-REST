@@ -81,7 +81,7 @@ public class ProjectController {
     @Operation(summary = "Get project details")
     @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
     @PreAuthorize("hasAnyAuthority('Manager')")
-    public ResponseEntity<ResponseWrapper> readAllProjectDetails() {
+    public ResponseEntity<ResponseWrapper> readAllProjectDetails() throws TicketingProjectException {
         return ResponseEntity
                 .ok(new ResponseWrapper("Project details are retrieved successfully!", projectService.listAllProjectDetails()));
     }
