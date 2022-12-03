@@ -87,7 +87,7 @@ public class TaskController {
                 .ok(new ResponseWrapper("Task is retrieved successfully!", taskService.listAllTasksByStatusIsNot(Status.COMPLETED)));
     }
 
-    @PutMapping
+    @PutMapping("/employee/update")
     @Operation(summary = "Update task status")
     @DefaultExceptionMessage(defaultMessage = "Something went wrong, please try again!")
     @PreAuthorize("hasAnyAuthority('Employee')")
