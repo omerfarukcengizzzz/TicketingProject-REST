@@ -87,4 +87,13 @@ public class TaskController {
                 .ok(new ResponseWrapper("Task is retrieved successfully!", taskService.listAllTasksByStatusIsNot(Status.COMPLETED)));
     }
 
+    @PutMapping
+    @Operation(summary = "Update task status")
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, please try again!")
+    @PreAuthorize("hasAnyAuthority('Employee')")
+    public ResponseEntity<ResponseWrapper> employeeUpdateTask(@RequestBody TaskDTO taskDTO) {
+        return ResponseEntity
+                .ok(new ResponseWrapper("Task status is updated successfully!", taskService.updateStatus(taskDTO)));
+    }
+
 }

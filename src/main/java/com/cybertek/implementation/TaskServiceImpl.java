@@ -157,7 +157,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void updateStatus(TaskDTO taskDTO) {
+    public TaskDTO updateStatus(TaskDTO taskDTO) {
         Optional<Task> task = taskRepository.findById(taskDTO.getId());
 
         if (task.isPresent()) {
@@ -165,6 +165,7 @@ public class TaskServiceImpl implements TaskService {
             taskRepository.save(task.get());
         }
 
+        return mapperUtil.convert(task, new TaskDTO());
     }
 
     @Override
