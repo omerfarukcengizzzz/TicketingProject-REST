@@ -5,6 +5,7 @@ import com.cybertek.dto.UserDTO;
 import com.cybertek.entity.Project;
 import com.cybertek.entity.User;
 import com.cybertek.enums.Status;
+import com.cybertek.exception.TicketingProjectException;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface ProjectService {
 
     List<ProjectDTO> listAllProjects();
 
-    Project save(ProjectDTO dto);
+    ProjectDTO save(ProjectDTO dto) throws TicketingProjectException;
 
     void update(ProjectDTO dto);
 

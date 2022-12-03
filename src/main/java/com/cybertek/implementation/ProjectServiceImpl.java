@@ -6,6 +6,7 @@ import com.cybertek.entity.Project;
 import com.cybertek.entity.Task;
 import com.cybertek.entity.User;
 import com.cybertek.enums.Status;
+import com.cybertek.exception.TicketingProjectException;
 import com.cybertek.mapper.ProjectMapper;
 import com.cybertek.mapper.UserMapper;
 import com.cybertek.repository.ProjectRepository;
@@ -13,6 +14,7 @@ import com.cybertek.repository.TaskRepository;
 import com.cybertek.service.ProjectService;
 import com.cybertek.service.TaskService;
 import com.cybertek.service.UserService;
+import com.cybertek.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
@@ -39,6 +41,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MapperUtil mapperUtil;
+
     @Override
     public ProjectDTO getByProjectCode(String code) {
         Project project = projectRepository.findByProjectCode(code);
@@ -54,10 +59,19 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project save(ProjectDTO dto) {
-        dto.setStatus(Status.OPEN);
-        Project project = projectMapper.convertToEntity(dto);
-        return projectRepository.save(project);
+    public ProjectDTO save(ProjectDTO dto) throws TicketingProjectException {
+        Project foundProject = projectRepository.findByProjectCode(dto.getProjectCode());
+
+        if (foundProject != null) {
+            throw new TicketingProjectException("Project with this code already exists!");
+        }
+
+        Project obj = mapperUtil.convert(dto, new Project());
+        obj.setStatus(Status.OPEN);
+
+        Project createdProject = projectRepository.save(obj);
+
+        return mapperUtil.convert(createdProject, new ProjectDTO());
     }
 
     @Override
