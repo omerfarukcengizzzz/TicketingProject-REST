@@ -2,6 +2,7 @@ package com.cybertek.controller.oldControllers;
 
 import com.cybertek.dto.TaskDTO;
 import com.cybertek.enums.Status;
+import com.cybertek.exception.TicketingProjectException;
 import com.cybertek.service.ProjectService;
 import com.cybertek.service.TaskService;
 import com.cybertek.service.UserService;
@@ -33,7 +34,7 @@ public class EmployeeController {
 
     // ----------------- Task Status - Update -----------------
     @GetMapping("/pending-tasks-update/{id}")
-    public String taskStatusUpdate(@PathVariable("id") Long id, Model model) {
+    public String taskStatusUpdate(@PathVariable("id") Long id, Model model) throws TicketingProjectException {
 
         model.addAttribute("task", taskService.findById(id));
         model.addAttribute("taskList", taskService.listAllTasksByStatusIsNot(Status.COMPLETED));

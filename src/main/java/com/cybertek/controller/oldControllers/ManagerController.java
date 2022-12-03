@@ -62,7 +62,7 @@ public class ManagerController {
 
     // ----------------- Task - Update -----------------
     @GetMapping("/task-update/{id}")
-    public String editTask(@PathVariable("id") Long id, Model model) {
+    public String editTask(@PathVariable("id") Long id, Model model) throws TicketingProjectException {
 
         model.addAttribute("task", taskService.findById(id));
         model.addAttribute("projectList", projectService.listAllNotCompletedProjects());
