@@ -25,7 +25,7 @@ public interface ProjectService {
 
     List<ProjectDTO> listAllProjectsByManager(UserDTO manager);
 
-    List<ProjectDTO> listAllProjectDetails();
+    List<ProjectDTO> listAllProjectDetails() throws TicketingProjectException;
 
     List<ProjectDTO> listAllNotCompletedProjects();
 

@@ -11,6 +11,7 @@ import com.cybertek.mapper.ProjectMapper;
 import com.cybertek.mapper.UserMapper;
 import com.cybertek.repository.ProjectRepository;
 import com.cybertek.repository.TaskRepository;
+import com.cybertek.repository.UserRepository;
 import com.cybertek.service.ProjectService;
 import com.cybertek.service.TaskService;
 import com.cybertek.service.UserService;
@@ -40,7 +41,8 @@ public class ProjectServiceImpl implements ProjectService {
     @Lazy
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private MapperUtil mapperUtil;
 
@@ -158,12 +160,18 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectDTO> listAllProjectDetails() {
-        String managerUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+    public List<ProjectDTO> listAllProjectDetails() throws TicketingProjectException {
+        String managerId = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        UserDTO manager = userService.findByUserName(managerUsername);
+        Long currentId = Long.parseLong(managerId);
 
-        User user = userMapper.convertToEntity(manager);
+        User user = userRepository.findById(currentId).orElseThrow(() -> new TicketingProjectException("This manager does not exists!"));
+
+
+
+//        UserDTO manager = userService.findByUserName(managerId);
+
+//        User user = userMapper.convertToEntity(manager);
 
         List<Project> projectList = projectRepository.findByAssignedManager(user);
 
