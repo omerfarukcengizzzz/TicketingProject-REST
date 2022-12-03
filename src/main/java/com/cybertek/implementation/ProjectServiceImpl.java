@@ -75,16 +75,24 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void update(ProjectDTO dto) {
+    public ProjectDTO update(ProjectDTO dto) throws TicketingProjectException {
         // find the current dto on entity
         Project project = projectRepository.findByProjectCode(dto.getProjectCode());
+
+        if (project == null) {
+            throw new TicketingProjectException("Project does not exists!");
+        }
+
         // convert the dto to entity
         Project convertedProject = projectMapper.convertToEntity(dto);
         // set id and status
         convertedProject.setId(project.getId());
         convertedProject.setStatus(project.getStatus());
+
         // save on db
         projectRepository.save(convertedProject);
+
+        return mapperUtil.convert(convertedProject, new ProjectDTO());
     }
 
     @Override
@@ -118,7 +126,11 @@ public class ProjectServiceImpl implements ProjectService {
                     outer : for (Task task : taskList) {
                         if (task.getStatus() != Status.COMPLETED) {
                             project.setStatus(Status.OPEN);
-                            save(projectMapper.convertToDTO(project));
+                            try {
+                                save(projectMapper.convertToDTO(project));
+                            } catch (TicketingProjectException e) {
+                                throw new RuntimeException(e);
+                            }
                             break outer;
                         }
                     }
@@ -151,7 +163,11 @@ public class ProjectServiceImpl implements ProjectService {
                     outer : for (Task task : taskList) {
                         if (task.getStatus() != Status.COMPLETED) {
                             project.setStatus(Status.OPEN);
-                            save(projectMapper.convertToDTO(project));
+                            try {
+                                save(projectMapper.convertToDTO(project));
+                            } catch (TicketingProjectException e) {
+                                throw new RuntimeException(e);
+                            }
                             break outer;
                         }
                     }

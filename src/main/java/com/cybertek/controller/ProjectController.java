@@ -30,22 +30,31 @@ public class ProjectController {
                 .ok(new ResponseWrapper("Projects retrieved successfully!", projectService.listAllProjects()));
     }
 
-    @GetMapping("/{projectcode}")
+    @GetMapping("/{projectCode}")
     @Operation(summary = "Get project by project code")
     @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
     @PreAuthorize("hasAnyAuthority('Admin', 'Manager')")
-    public ResponseEntity<ResponseWrapper> readByProjectCode(@PathVariable String projectcode) {
+    public ResponseEntity<ResponseWrapper> readByProjectCode(@PathVariable String projectCode) {
         return ResponseEntity
-                .ok(new ResponseWrapper("Project retrieved successfully!", projectService.getByProjectCode(projectcode)));
+                .ok(new ResponseWrapper("Project retrieved successfully!", projectService.getByProjectCode(projectCode)));
     }
 
-    @PostMapping("/create-project")
+    @PostMapping
     @Operation(summary = "Create project")
     @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
     @PreAuthorize("hasAnyAuthority('Admin', 'Manager')")
     public ResponseEntity<ResponseWrapper> createProject(@RequestBody ProjectDTO dto) throws TicketingProjectException {
         return ResponseEntity
                 .ok(new ResponseWrapper("Project created successfully!", projectService.save(dto)));
+    }
+
+    @PutMapping
+    @Operation(summary = "Update project")
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, try again!")
+    @PreAuthorize("hasAnyAuthority('Admin', 'Manager')")
+    public ResponseEntity<ResponseWrapper> updateProject(@RequestBody ProjectDTO dto) throws TicketingProjectException {
+        return ResponseEntity
+                .ok(new ResponseWrapper("Project updated successfully!", projectService.update(dto)));
     }
 
 
