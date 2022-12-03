@@ -69,7 +69,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void update(TaskDTO taskDTO) {
+    public TaskDTO update(TaskDTO taskDTO) {
         Optional<Task> task = taskRepository.findById(taskDTO.getId());
         Task convertedTask = taskMapper.convertToEntity(taskDTO);
 
@@ -80,6 +80,7 @@ public class TaskServiceImpl implements TaskService {
             taskRepository.save(convertedTask);
         }
 
+        return mapperUtil.convert(convertedTask, new TaskDTO());
     }
 
     @Override

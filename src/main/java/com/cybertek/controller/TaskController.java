@@ -3,6 +3,7 @@ package com.cybertek.controller;
 import com.cybertek.annotation.DefaultExceptionMessage;
 import com.cybertek.dto.TaskDTO;
 import com.cybertek.entity.ResponseWrapper;
+import com.cybertek.enums.Status;
 import com.cybertek.exception.TicketingProjectException;
 import com.cybertek.service.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,7 +46,7 @@ public class TaskController {
     @PreAuthorize("hasAnyAuthority('Manager', 'Employee')")
     public ResponseEntity<ResponseWrapper> readById(@PathVariable Long id) throws TicketingProjectException {
         return ResponseEntity
-                .ok(new ResponseWrapper("Tasks are retrieved successfully!", taskService.findById(id)));
+                .ok(new ResponseWrapper("Task is retrieved successfully!", taskService.findById(id)));
     }
 
     @PostMapping
@@ -54,7 +55,7 @@ public class TaskController {
     @PreAuthorize("hasAnyAuthority('Manager')")
     public ResponseEntity<ResponseWrapper> createTask(@RequestBody TaskDTO taskDTO) {
         return ResponseEntity
-                .ok(new ResponseWrapper("Tasks are retrieved successfully!", taskService.save(taskDTO)));
+                .ok(new ResponseWrapper("Task created successfully!", taskService.save(taskDTO)));
     }
 
     @DeleteMapping("/{id}")
@@ -65,7 +66,25 @@ public class TaskController {
         taskService.delete(id);
 
         return ResponseEntity
-                .ok(new ResponseWrapper("Tasks are retrieved successfully!"));
+                .ok(new ResponseWrapper("Task is deleted successfully!"));
+    }
+
+    @PutMapping
+    @Operation(summary = "Update task")
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, please try again!")
+    @PreAuthorize("hasAnyAuthority('Manager')")
+    public ResponseEntity<ResponseWrapper> updateTask(@RequestBody TaskDTO taskDTO) throws TicketingProjectException {
+        return ResponseEntity
+                .ok(new ResponseWrapper("Task is updated successfully!", taskService.update(taskDTO)));
+    }
+
+    @GetMapping("/employee")
+    @Operation(summary = "Get non completed tasks")
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, please try again!")
+    @PreAuthorize("hasAnyAuthority('Employee')")
+    public ResponseEntity<ResponseWrapper> readAllNonCompletedTasks() {
+        return ResponseEntity
+                .ok(new ResponseWrapper("Task is retrieved successfully!", taskService.listAllTasksByStatusIsNot(Status.COMPLETED)));
     }
 
 }
