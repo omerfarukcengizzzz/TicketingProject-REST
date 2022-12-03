@@ -16,7 +16,7 @@ public interface TaskService {
 
     List<TaskDTO> listAllTasks();
 
-    Task save(TaskDTO taskDTO);
+    TaskDTO save(TaskDTO taskDTO);
 
     void update(TaskDTO taskDTO);
 

@@ -56,14 +56,16 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task save(TaskDTO taskDTO) {
+    public TaskDTO save(TaskDTO taskDTO) {
         Task task = taskMapper.convertToEntity(taskDTO);
+
         task.setAssignedDate(LocalDate.now());
         task.setStatus(Status.OPEN);
         task.setId(taskDTO.getId());
-        taskRepository.save(task);
 
-        return task;
+        Task savedTask = taskRepository.save(task);
+
+        return mapperUtil.convert(savedTask, new TaskDTO());
     }
 
     @Override

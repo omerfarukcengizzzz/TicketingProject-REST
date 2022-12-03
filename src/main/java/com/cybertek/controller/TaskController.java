@@ -1,6 +1,7 @@
 package com.cybertek.controller;
 
 import com.cybertek.annotation.DefaultExceptionMessage;
+import com.cybertek.dto.TaskDTO;
 import com.cybertek.entity.ResponseWrapper;
 import com.cybertek.exception.TicketingProjectException;
 import com.cybertek.service.TaskService;
@@ -9,9 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/task")
@@ -40,5 +39,22 @@ public class TaskController {
                 .ok(new ResponseWrapper("Tasks are retrieved successfully!", taskService.listAllTasksByProjectManager()));
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "Get task by id")
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, please try again!")
+    @PreAuthorize("hasAnyAuthority('Manager', 'Employee')")
+    public ResponseEntity<ResponseWrapper> readById(@PathVariable Long id) throws TicketingProjectException {
+        return ResponseEntity
+                .ok(new ResponseWrapper("Tasks are retrieved successfully!", taskService.findById(id)));
+    }
+
+    @PostMapping
+    @Operation(summary = "Create a new task")
+    @DefaultExceptionMessage(defaultMessage = "Something went wrong, please try again!")
+    @PreAuthorize("hasAnyAuthority('Manager')")
+    public ResponseEntity<ResponseWrapper> createTask(@RequestBody TaskDTO taskDTO) throws TicketingProjectException {
+        return ResponseEntity
+                .ok(new ResponseWrapper("Tasks are retrieved successfully!", taskService.save(taskDTO)));
+    }
 
 }
