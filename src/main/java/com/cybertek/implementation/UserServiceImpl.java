@@ -83,6 +83,10 @@ public class UserServiceImpl implements UserService {
         entityUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
         // set isEnabled()
+        if (!user.isEnabled()) {
+            throw new TicketingProjectException("User has not confirmed email!");
+        }
+
         entityUser.setEnabled(true);
 
         // save updated user
