@@ -12,10 +12,15 @@ import com.cybertek.service.TaskService;
 import com.cybertek.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO findByUserName(String username) {
         User user = userRepository.findByUserName(username);
-
+        checkForAuthorities(user);
         return mapperUtil.convert(user, new UserDTO());
     }
 
@@ -86,6 +91,8 @@ public class UserServiceImpl implements UserService {
         if (!user.isEnabled()) {
             throw new TicketingProjectException("User has not confirmed email!");
         }
+
+        checkForAuthorities(user);
 
         entityUser.setEnabled(true);
 
@@ -164,6 +171,19 @@ public class UserServiceImpl implements UserService {
         User confirmedUser = userRepository.save(user);
 
         return mapperUtil.convert(confirmedUser, new UserDTO());
+    }
+
+    private void checkForAuthorities(User user) {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && !authentication.getName().equals("anonymousUser")) {
+            Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+
+            if (!(authentication.getName().equals(user.getId().toString()) || roles.contains("Admin"))) {
+                throw new AccessDeniedException("Access is denied");
+            }
+        }
+
     }
 
 }
