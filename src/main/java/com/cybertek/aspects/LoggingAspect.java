@@ -1,6 +1,7 @@
 package com.cybertek.aspects;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -24,6 +25,13 @@ public class LoggingAspect {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         logger.info("Before(User : {} - Method : {} - Parameters : {})", authentication.getName(), joinPoint.getSignature().toShortString(), joinPoint.getArgs());
+    }
+
+    @AfterReturning(pointcut = "anyControllerOperation()", returning = "results")
+    public void anyAfterReturningControllerOperationAdvice(JoinPoint joinPoint, Object results) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        logger.info("AfterReturning(User : {} - Method : {} - Results : {})", authentication.getName(), joinPoint.getSignature().toShortString(), results.toString());
     }
     
 }
