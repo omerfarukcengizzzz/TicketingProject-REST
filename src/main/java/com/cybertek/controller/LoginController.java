@@ -1,6 +1,7 @@
 package com.cybertek.controller;
 
 import com.cybertek.annotation.DefaultExceptionMessage;
+import com.cybertek.annotation.ExecutionTime;
 import com.cybertek.dto.UserDTO;
 import com.cybertek.entity.ConfirmationToken;
 import com.cybertek.entity.ResponseWrapper;
@@ -17,8 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-
-import java.nio.file.AccessDeniedException;
 
 @RestController
 @Tag(name = "Authentication Controller",description = "Authenticate API")
@@ -41,7 +40,8 @@ public class LoginController {
     @PostMapping("/authenticate")
     @DefaultExceptionMessage(defaultMessage = "Bad Credentials")
     @Operation(summary = "Login to application")
-    public ResponseEntity<ResponseWrapper> doLogin(@RequestBody AuthenticationRequest authenticationRequest) throws TicketingProjectException, AccessDeniedException {
+    @ExecutionTime
+    public ResponseEntity<ResponseWrapper> doLogin(@RequestBody AuthenticationRequest authenticationRequest) throws TicketingProjectException {
 
         String password = authenticationRequest.getPassword();
         String username = authenticationRequest.getUsername();

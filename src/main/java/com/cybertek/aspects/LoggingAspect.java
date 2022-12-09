@@ -12,28 +12,26 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @Slf4j
 public class LoggingAspect {
 
-    @Pointcut("execution(* com.cybertek.controller.ProjectController.*()) || execution(* com.cybertek.controller.TaskController.*())")
-    private void anyControllerOperation() {}
+    @Pointcut("execution(* com.cybertek.controller.ProjectController.*(..)) || execution(* com.cybertek.controller.TaskController.*(..))")
+    private void anyControllerOperation() {
+    }
 
     @Before("anyControllerOperation()")
     public void anyBeforeControllerOperationAdvice(JoinPoint joinPoint) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        log.info("Before(User : {} - Method : {} - Parameters : {})", authentication.getName(), joinPoint.getSignature().toShortString(), joinPoint.getArgs());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        log.info("Before(User : {} - Method : {} - Parameters : {}", auth.getName(), joinPoint.getSignature().toShortString(), joinPoint.getArgs());
     }
 
     @AfterReturning(pointcut = "anyControllerOperation()", returning = "results")
     public void anyAfterReturningControllerOperationAdvice(JoinPoint joinPoint, Object results) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        log.info("AfterReturning(User : {} - Method : {} - Results : {})", authentication.getName(), joinPoint.getSignature().toShortString(), results.toString());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        log.info("AfterReturning(User : {} - Method : {} - Results : {}", auth.getName(), joinPoint.getSignature().toShortString(), results.toString());
     }
 
     @AfterThrowing(pointcut = "anyControllerOperation()", throwing = "exception")
     public void anyAfterThrowingControllerOperationAdvice(JoinPoint joinPoint, RuntimeException exception) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        log.info("AfterReturning(User : {} - Method : {} - Exception : {})", authentication.getName(), joinPoint.getSignature().toShortString(), exception.getLocalizedMessage());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        log.info("After throwing(User : {} - Method : {} - Exception : {}", auth.getName(), joinPoint.getSignature().toShortString(), exception.getLocalizedMessage());
     }
-    
+
 }
