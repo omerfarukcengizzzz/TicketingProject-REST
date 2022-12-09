@@ -1,0 +1,3 @@
+[INFO ] 2022-12-08 22:07:45.276 [http-nio-8080-exec-1] LoggingAspect - Before(User : 1 - Method : ProjectController.readAll() - Parameters : []
+[INFO ] 2022-12-08 22:07:45.321 [http-nio-8080-exec-1] LoggingAspect - AfterReturning(User : 1 - Method : ProjectController.readAll() - Results : <200 OK OK,com.cybertek.entity.ResponseWrapper@ff540f4,[]>
+[INFO ] 2022-12-08 22:08:18.503 [http-nio-8080-exec-2] PerformanceAspect - Time taken to execute : 191 ms (Method : LoginController.doLogin(..) - Parameter : [com.cybertek.entity.common.AuthenticationRequest@1d47cabe])
