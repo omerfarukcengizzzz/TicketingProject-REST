@@ -19,7 +19,7 @@ public class PerformanceAspect {
     public Object anyExecutionTimeOperationAdvice(ProceedingJoinPoint proceedingJoinPoint){
         long beforeTime = System.currentTimeMillis();
 
-        Object result = null;
+        Object result;
 
         try {
             result = proceedingJoinPoint.proceed();
